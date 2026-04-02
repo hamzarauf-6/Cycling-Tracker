@@ -48,12 +48,40 @@ document.addEventListener('DOMContentLoaded', () => {
     maxZoom: 19
   }).addTo(rideMap);
 
-  // Default view (London) — replaced as soon as GPS locks
-  rideMap.setView([51.5, -0.1], 13);
+  // Centre the map on the user's real location right away.
+  // Falls back to a world view if permission is denied.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      pos => rideMap.setView([pos.coords.latitude, pos.coords.longitude], 15),
+      ()   => rideMap.setView([30.0, 70.0], 5)   // fallback: centred on Pakistan
+    );
+  } else {
+    rideMap.setView([30.0, 70.0], 5);
+  }
 
   // Populate the History tab from saved data
   loadHistory();
 });
+
+
+// ══════════════════════════════════════════════════════════════
+//  RECENTER BUTTON
+// ══════════════════════════════════════════════════════════════
+
+function recenterMap() {
+  // During a ride we already have the latest position in lastPoint
+  if (lastPoint) {
+    rideMap.setView([lastPoint.lat, lastPoint.lon], 16);
+    return;
+  }
+  // Otherwise (not riding) ask the device for the current position
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      pos => rideMap.setView([pos.coords.latitude, pos.coords.longitude], 15),
+      ()   => {}   // silently ignore if denied
+    );
+  }
+}
 
 
 // ══════════════════════════════════════════════════════════════

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ride Tracker</title>
+
+  <!-- Leaflet map library (loaded from the internet, no install needed) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Tab bar at the top -->
+  <nav>
+    <button class="nav-btn active" id="nav-ride" onclick="showScreen('ride')">Ride</button>
+    <button class="nav-btn" id="nav-history" onclick="showScreen('history')">History</button>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       RIDE SCREEN — shown by default
+  ═══════════════════════════════════════════ -->
+  <div id="screen-ride" class="screen">
+
+    <!-- Small status bar for GPS messages -->
+    <div id="gps-status" class="gps-status">Tap Start to begin</div>
+
+    <!-- Four live stats in a 2×2 grid -->
+    <div class="stats-grid">
+      <div class="stat">
+        <span class="stat-value" id="speed">0.0</span>
+        <span class="stat-label">speed km/h</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="avg-speed">0.0</span>
+        <span class="stat-label">avg km/h</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="distance">0.00</span>
+        <span class="stat-label">km</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="timer">00:00:00</span>
+        <span class="stat-label">time</span>
+      </div>
+    </div>
+
+    <!-- Map fills the remaining screen space -->
+    <div id="map"></div>
+
+    <!-- Big Start / Stop button at the bottom -->
+    <button id="start-stop-btn" class="start-btn" onclick="toggleRide()">Start</button>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       HISTORY SCREEN — hidden until selected
+  ═══════════════════════════════════════════ -->
+  <div id="screen-history" class="screen hidden">
+
+    <!-- List of saved rides -->
+    <div id="ride-list"></div>
+
+    <!-- Detail view for a single past ride (hidden until a ride is tapped) -->
+    <div id="ride-detail" class="hidden">
+      <button class="back-btn" onclick="closeDetail()">← Back to rides</button>
+      <div id="detail-stats"></div>
+      <div id="detail-map"></div>
+    </div>
+
+  </div>
+
+  <!-- Leaflet JS (must come before app.js) -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>

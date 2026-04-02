@@ -1,0 +1,239 @@
+/* ── Reset ──────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Page layout ────────────────────────────────────────── */
+/* The whole page fits in one screen height with no scrolling */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f0f0f0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Tab navigation ─────────────────────────────────────── */
+nav {
+  display: flex;
+  height: 50px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  flex-shrink: 0;
+}
+
+.nav-btn {
+  flex: 1;
+  border: none;
+  background: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #999;
+  cursor: pointer;
+}
+
+.nav-btn.active {
+  color: #f36f21;
+  border-bottom: 3px solid #f36f21;
+}
+
+/* ── Screen container ───────────────────────────────────── */
+.screen {
+  flex: 1;         /* fill remaining height below nav */
+  overflow: hidden;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ── Ride screen: stacks vertically, map fills the middle ── */
+#screen-ride {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── GPS status bar ─────────────────────────────────────── */
+.gps-status {
+  padding: 7px 16px;
+  font-size: 13px;
+  text-align: center;
+  background: #fff8f0;
+  color: #b35000;
+  flex-shrink: 0;
+}
+
+.gps-status.locked {
+  background: #f0faf0;
+  color: #276227;
+}
+
+.gps-status.error {
+  background: #fff0f0;
+  color: #b30000;
+}
+
+/* ── Stats grid (2 × 2) ─────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  flex-shrink: 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 8px;
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+/* Remove right border on even items (right column) */
+.stat:nth-child(2n) {
+  border-right: none;
+}
+
+.stat-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+}
+
+/* ── Map — expands to fill all remaining space ───────────── */
+#map {
+  flex: 1;
+  min-height: 0; /* required for flex children to shrink correctly */
+}
+
+/* ── Start / Stop button ────────────────────────────────── */
+.start-btn,
+.stop-btn {
+  height: 64px;
+  border: none;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.start-btn {
+  background: #f36f21;
+  color: #fff;
+}
+
+.stop-btn {
+  background: #d32f2f;
+  color: #fff;
+}
+
+/* ── History screen ─────────────────────────────────────── */
+#screen-history {
+  display: block;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.ride-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ride-card:active {
+  background: #f5f5f5;
+}
+
+.ride-date {
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 10px;
+}
+
+.ride-stats-row {
+  display: flex;
+  gap: 24px;
+}
+
+.ride-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ride-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.ride-stat-label {
+  font-size: 11px;
+  color: #aaa;
+  text-transform: uppercase;
+}
+
+.empty-msg {
+  text-align: center;
+  color: #bbb;
+  padding: 60px 0;
+  font-size: 15px;
+}
+
+/* ── Ride detail view ───────────────────────────────────── */
+.back-btn {
+  display: block;
+  background: none;
+  border: none;
+  color: #f36f21;
+  font-size: 16px;
+  padding: 12px 0 16px;
+  cursor: pointer;
+  text-align: left;
+}
+
+#detail-stats {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+#detail-stats h3 {
+  font-size: 14px;
+  color: #888;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.detail-stats-row {
+  display: flex;
+  gap: 24px;
+}
+
+#detail-map {
+  height: 320px;
+  border-radius: 10px;
+  overflow: hidden;
+}

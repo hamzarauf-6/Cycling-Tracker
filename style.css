@@ -126,14 +126,7 @@ nav {
   height: 100%;
 }
 
-/* Dark map with preserved colors.
-   invert(1) + hue-rotate(180deg) flips the light Voyager tiles to dark
-   while mathematically preserving all hues (green parks, blue water, road colors).
-   Applied only to the tile layer — route line and markers are unaffected. */
-#map .leaflet-tile-pane,
-#detail-map .leaflet-tile-pane {
-  filter: invert(1) hue-rotate(180deg) brightness(1.15) saturate(1.6) contrast(1.05);
-}
+/* Mapbox dark-v11 tiles are natively dark — no filter needed */
 
 /* ── Leaflet controls — locate button + zoom buttons ────────── */
 /* All leaflet-bar controls (locate + zoom) share the same dark style */

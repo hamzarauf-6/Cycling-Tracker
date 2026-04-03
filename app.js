@@ -52,8 +52,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Falls back to a world view if permission is denied.
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
-      pos => rideMap.setView([pos.coords.latitude, pos.coords.longitude], 15),
-      ()   => rideMap.setView([30.0, 70.0], 5)   // fallback: centred on Pakistan
+      pos => {
+        rideMap.setView([pos.coords.latitude, pos.coords.longitude], 15);
+        // Show the location marker immediately, before any ride starts
+        posMarker = L.marker(
+          [pos.coords.latitude, pos.coords.longitude],
+          { icon: createLocationIcon(null), zIndexOffset: 1000 }
+        ).addTo(rideMap);
+      },
+      () => rideMap.setView([30.0, 70.0], 5)   // fallback: centred on Pakistan
     );
   } else {
     rideMap.setView([30.0, 70.0], 5);
@@ -117,9 +124,8 @@ function startRide() {
   setVal('distance',  '0.00');
   setVal('timer',     '00:00:00');
 
-  // Clear any previous route from the map
+  // Clear only the previous route line — keep the location marker visible
   if (routePolyline) { rideMap.removeLayer(routePolyline); routePolyline = null; }
-  if (posMarker)     { rideMap.removeLayer(posMarker);     posMarker     = null; }
 
   // Flip button to red Stop
   const btn = document.getElementById('start-stop-btn');
@@ -197,9 +203,16 @@ function onGpsUpdate(pos) {
     lastSavedPoint = { lat, lon, time: now };
     routeCoords.push([lat, lon]);
 
-    // Centre map and draw the starting marker + empty polyline
+    // Centre map and draw the route polyline.
+    // Update the existing marker if it's already on the map (placed on load),
+    // otherwise create it fresh.
     rideMap.setView([lat, lon], 16);
-    posMarker     = L.marker([lat, lon], { icon: createLocationIcon(pos.coords.heading), zIndexOffset: 1000 }).addTo(rideMap);
+    if (posMarker) {
+      posMarker.setLatLng([lat, lon]);
+      posMarker.setIcon(createLocationIcon(pos.coords.heading));
+    } else {
+      posMarker = L.marker([lat, lon], { icon: createLocationIcon(pos.coords.heading), zIndexOffset: 1000 }).addTo(rideMap);
+    }
     routePolyline = L.polyline(routeCoords, { color: '#f36f21', weight: 5 }).addTo(rideMap);
 
     setStatus('GPS locked', 'locked');

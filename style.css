@@ -1,27 +1,28 @@
-/* ── Reset ──────────────────────────────────────────────── */
+/* ── Reset ──────────────────────────────────────────────────── */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* ── Page layout ────────────────────────────────────────── */
-/* The whole page fits in one screen height with no scrolling */
+/* ── Base ───────────────────────────────────────────────────── */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #f0f0f0;
+  background: #111111;
+  color: #ffffff;
   height: 100vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ── Tab navigation ─────────────────────────────────────── */
+/* ── Tab navigation ─────────────────────────────────────────── */
 nav {
   display: flex;
-  height: 50px;
-  background: #fff;
-  border-bottom: 1px solid #ddd;
+  height: 52px;
+  background: #1c1c1e;
+  border-bottom: 1px solid #2c2c2e;
   flex-shrink: 0;
 }
 
@@ -29,20 +30,22 @@ nav {
   flex: 1;
   border: none;
   background: none;
-  font-size: 16px;
-  font-weight: 600;
-  color: #999;
+  font-size: 15px;
+  font-weight: 700;
+  color: #48484a;
   cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: color 0.15s;
 }
 
 .nav-btn.active {
   color: #f36f21;
-  border-bottom: 3px solid #f36f21;
+  border-bottom: 2.5px solid #f36f21;
 }
 
-/* ── Screen container ───────────────────────────────────── */
+/* ── Screen container ───────────────────────────────────────── */
 .screen {
-  flex: 1;         /* fill remaining height below nav */
+  flex: 1;
   overflow: hidden;
 }
 
@@ -50,75 +53,72 @@ nav {
   display: none !important;
 }
 
-/* ── Ride screen: stacks vertically, map fills the middle ── */
+/* ── Ride screen ────────────────────────────────────────────── */
 #screen-ride {
   display: flex;
   flex-direction: column;
 }
 
-/* ── GPS status bar ─────────────────────────────────────── */
+/* ── GPS status bar ─────────────────────────────────────────── */
+/* No background fill — just a thin line of coloured text */
 .gps-status {
-  padding: 7px 16px;
-  font-size: 13px;
+  padding: 5px 16px;
+  font-size: 11px;
   text-align: center;
-  background: #fff8f0;
-  color: #b35000;
+  background: #1c1c1e;
+  color: #48484a;
   flex-shrink: 0;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #2c2c2e;
 }
 
 .gps-status.locked {
-  background: #f0faf0;
-  color: #276227;
+  color: #30d158;
 }
 
 .gps-status.error {
-  background: #fff0f0;
-  color: #b30000;
+  color: #ff453a;
 }
 
-/* ── Stats grid (2 × 2) ─────────────────────────────────── */
+/* ── Stats grid (2 × 2) ─────────────────────────────────────── */
 .stats-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background: #fff;
-  border-bottom: 1px solid #ddd;
+  background: #1c1c1e;
   flex-shrink: 0;
+  border-bottom: 1px solid #2c2c2e;
 }
 
 .stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px 8px;
-  border-right: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-}
-
-/* Remove right border on even items (right column) */
-.stat:nth-child(2n) {
-  border-right: none;
+  padding: 14px 8px 12px;
+  /* No borders between cells — clean open grid */
 }
 
 .stat-value {
-  font-size: 26px;
-  font-weight: 700;
-  color: #1a1a1a;
+  font-size: 36px;
+  font-weight: 800;
+  color: #ffffff;
   line-height: 1;
+  letter-spacing: -1.5px;
 }
 
 .stat-label {
   font-size: 10px;
-  color: #999;
+  color: #636366;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-top: 3px;
+  letter-spacing: 0.8px;
+  margin-top: 5px;
 }
 
-/* ── Map wrapper — expands to fill all remaining space ───── */
+/* ── Map wrapper ────────────────────────────────────────────── */
 .map-wrap {
   flex: 1;
   min-height: 0;
-  position: relative; /* anchor for the floating button */
+  position: relative;
 }
 
 #map {
@@ -126,137 +126,173 @@ nav {
   height: 100%;
 }
 
-/* ── Recenter button — floats over the bottom-right of map ── */
+/* ── Recenter button — floats over map ──────────────────────── */
 .recenter-btn {
   position: absolute;
   bottom: 16px;
-  right: 16px;
-  z-index: 1000;       /* sit above the map tiles */
-  background: #fff;
-  border: 1.5px solid #ccc;
-  border-radius: 8px;
+  right: 12px;
+  z-index: 1000;
+  background: #1c1c1e;
+  border: 1px solid #3a3a3c;
+  border-radius: 20px;
   padding: 8px 14px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  color: #333;
+  color: #f36f21;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* ── Start / Stop button ────────────────────────────────── */
+/* ── Leaflet controls — styled for dark theme ───────────────── */
+.leaflet-control-zoom a {
+  background-color: #1c1c1e !important;
+  color: #ffffff !important;
+  border-color: #3a3a3c !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #2c2c2e !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(0, 0, 0, 0.55) !important;
+  color: #636366 !important;
+  font-size: 10px !important;
+}
+
+.leaflet-control-attribution a {
+  color: #8e8e93 !important;
+}
+
+/* ── Start / Stop button ────────────────────────────────────── */
 .start-btn,
 .stop-btn {
   height: 64px;
   border: none;
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   cursor: pointer;
   flex-shrink: 0;
   width: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .start-btn {
   background: #f36f21;
-  color: #fff;
+  color: #ffffff;
 }
 
 .stop-btn {
-  background: #d32f2f;
-  color: #fff;
+  background: #c0392b;
+  color: #ffffff;
 }
 
-/* ── History screen ─────────────────────────────────────── */
+/* ── History screen ─────────────────────────────────────────── */
 #screen-history {
   display: block;
   overflow-y: auto;
   padding: 16px;
+  background: #111111;
 }
 
+/* ── Ride card ──────────────────────────────────────────────── */
 .ride-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 16px;
+  background: #1c1c1e;
+  border-radius: 12px;
+  padding: 16px 16px 16px 20px;
   margin-bottom: 12px;
   cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border: 1px solid #2c2c2e;
+  /* Orange left stripe — the only colour accent on the card */
+  border-left: 3px solid #f36f21;
   -webkit-tap-highlight-color: transparent;
 }
 
 .ride-card:active {
-  background: #f5f5f5;
+  background: #2c2c2e;
 }
 
 .ride-date {
-  font-size: 13px;
-  color: #999;
-  margin-bottom: 10px;
+  font-size: 11px;
+  color: #636366;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .ride-stats-row {
   display: flex;
-  gap: 24px;
+  gap: 28px;
 }
 
 .ride-stat {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 }
 
 .ride-stat-value {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #ffffff;
+  letter-spacing: -0.5px;
 }
 
 .ride-stat-label {
-  font-size: 11px;
-  color: #aaa;
+  font-size: 10px;
+  color: #636366;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 3px;
 }
 
 .empty-msg {
   text-align: center;
-  color: #bbb;
+  color: #3a3a3c;
   padding: 60px 0;
   font-size: 15px;
 }
 
-/* ── Ride detail view ───────────────────────────────────── */
+/* ── Ride detail view ───────────────────────────────────────── */
 .back-btn {
   display: block;
   background: none;
   border: none;
   color: #f36f21;
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 600;
   padding: 12px 0 16px;
   cursor: pointer;
   text-align: left;
 }
 
 #detail-stats {
-  background: #fff;
-  border-radius: 10px;
-  padding: 16px;
+  background: #1c1c1e;
+  border-radius: 12px;
+  padding: 16px 16px 16px 20px;
   margin-bottom: 14px;
+  border: 1px solid #2c2c2e;
+  border-left: 3px solid #f36f21;
 }
 
 #detail-stats h3 {
-  font-size: 14px;
-  color: #888;
+  font-size: 11px;
+  color: #636366;
   font-weight: 400;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .detail-stats-row {
   display: flex;
-  gap: 24px;
+  gap: 28px;
 }
 
 #detail-map {
   height: 320px;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
 }

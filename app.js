@@ -487,14 +487,14 @@ function createLocationIcon(heading) {
       <!-- Direction cone: only drawn when we have a real heading -->
       ${hasHeading
         ? `<path d="M18 2 L25 18 L18 14 L11 18 Z"
-               fill="#1a73e8" fill-opacity="0.85"/>`
+               fill="#0a84ff" fill-opacity="0.85"/>`
         : ''}
 
       <!-- Outer white ring (gives a clean edge against any map background) -->
       <circle cx="18" cy="18" r="10" fill="white"/>
 
       <!-- Main blue dot -->
-      <circle cx="18" cy="18" r="8" fill="#1a73e8"/>
+      <circle cx="18" cy="18" r="8" fill="#0a84ff"/>
 
     </svg>`;
 

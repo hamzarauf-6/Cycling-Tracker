@@ -199,7 +199,7 @@ function onGpsUpdate(pos) {
 
     // Centre map and draw the starting marker + empty polyline
     rideMap.setView([lat, lon], 16);
-    posMarker     = L.circleMarker([lat, lon], { radius: 8, color: '#f36f21', fillColor: '#f36f21', fillOpacity: 1 }).addTo(rideMap);
+    posMarker     = L.marker([lat, lon], { icon: createLocationIcon(pos.coords.heading), zIndexOffset: 1000 }).addTo(rideMap);
     routePolyline = L.polyline(routeCoords, { color: '#f36f21', weight: 5 }).addTo(rideMap);
 
     setStatus('GPS locked', 'locked');
@@ -249,8 +249,11 @@ function onGpsUpdate(pos) {
     if (routePolyline) routePolyline.setLatLngs(routeCoords);
   }
 
-  // ── Update map position ─────────────────────────────────────
-  if (posMarker) posMarker.setLatLng([lat, lon]);
+  // ── Update map position and heading arrow ──────────────────
+  if (posMarker) {
+    posMarker.setLatLng([lat, lon]);
+    posMarker.setIcon(createLocationIcon(pos.coords.heading));
+  }
 
   // Auto-centre only while the ride is active.
   // Once stopped the user can freely pan/zoom to explore the route.
@@ -454,6 +457,42 @@ function haversine(lat1, lon1, lat2, lon2) {
 // ══════════════════════════════════════════════════════════════
 //  TINY HELPERS
 // ══════════════════════════════════════════════════════════════
+
+// Builds a Leaflet divIcon that looks like the Google/Apple Maps location dot.
+// When the device reports a heading (direction of travel), a cone appears on top
+// of the dot and rotates to point the way you're going.
+// When stationary (no heading), just a plain blue dot is shown.
+function createLocationIcon(heading) {
+  const hasHeading = heading !== null && heading !== undefined && !isNaN(heading);
+  const rotation   = hasHeading ? heading : 0;
+
+  // Everything is a single inline SVG — no extra CSS file needed.
+  const svg = `
+    <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"
+         style="transform:rotate(${rotation}deg);transform-origin:50% 50%;display:block;">
+
+      <!-- Direction cone: only drawn when we have a real heading -->
+      ${hasHeading
+        ? `<path d="M18 2 L25 18 L18 14 L11 18 Z"
+               fill="#1a73e8" fill-opacity="0.85"/>`
+        : ''}
+
+      <!-- Outer white ring (gives a clean edge against any map background) -->
+      <circle cx="18" cy="18" r="10" fill="white"/>
+
+      <!-- Main blue dot -->
+      <circle cx="18" cy="18" r="8" fill="#1a73e8"/>
+
+    </svg>`;
+
+  return L.divIcon({
+    className:  '',          // clear Leaflet's default white box
+    html:       svg,
+    iconSize:   [36, 36],
+    iconAnchor: [18, 18],    // centre of the icon sits on the GPS coordinate
+  });
+}
+
 
 function setVal(id, value) {
   document.getElementById(id).textContent = value;

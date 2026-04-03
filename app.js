@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
   L.control.zoom({ position: 'topleft' }).addTo(rideMap);
 
   // Load map tiles from OpenStreetMap (free, no API key)
-  L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGFtemFyYXVmNiIsImEiOiJjbW5pcXI0NHMwZDVtMm9zOWgxM200aHFhIn0.f2Fm07qGoVDpjUj5SjQr2Q', {
+  L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/navigation-night-v1/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGFtemFyYXVmNiIsImEiOiJjbW5pcXI0NHMwZDVtMm9zOWgxM200aHFhIn0.f2Fm07qGoVDpjUj5SjQr2Q', {
     attribution: '© <a href="https://www.mapbox.com/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     maxZoom: 22
   }).addTo(rideMap);

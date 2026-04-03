@@ -39,11 +39,40 @@ let detailMap     = null;   // the map shown inside a past-ride detail view
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Create the Leaflet map inside the <div id="map"> element
-  rideMap = L.map('map', { zoomControl: true });
+  // Create the Leaflet map without the built-in zoom control so we can
+  // insert the locate button above it manually
+  rideMap = L.map('map', { zoomControl: false });
+
+  // ── Locate button (sits above zoom, exactly like Strava) ──────
+  const LocateControl = L.Control.extend({
+    options: { position: 'topleft' },
+    onAdd() {
+      const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+      const btn       = L.DomUtil.create('a',   '', container);
+      btn.href        = '#';
+      btn.title       = 'My location';
+      btn.setAttribute('role', 'button');
+      // Crosshair icon — same visual language as Strava
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4"/>
+        <line x1="12" y1="2"  x2="12" y2="7"/>
+        <line x1="12" y1="17" x2="12" y2="22"/>
+        <line x1="2"  y1="12" x2="7"  y2="12"/>
+        <line x1="17" y1="12" x2="22" y2="12"/>
+      </svg>`;
+      L.DomEvent.disableClickPropagation(container);
+      L.DomEvent.on(btn, 'click', e => { L.DomEvent.preventDefault(e); recenterMap(); });
+      return container;
+    }
+  });
+  new LocateControl().addTo(rideMap);
+
+  // Zoom control goes below the locate button
+  L.control.zoom({ position: 'topleft' }).addTo(rideMap);
 
   // Load map tiles from OpenStreetMap (free, no API key)
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
     maxZoom: 19
   }).addTo(rideMap);

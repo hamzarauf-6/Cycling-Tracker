@@ -126,40 +126,41 @@ nav {
   height: 100%;
 }
 
-/* Boost tile brightness so roads, parks and water are clearly visible.
+/* Dark map with preserved colors.
+   invert(1) + hue-rotate(180deg) flips the light Voyager tiles to dark
+   while mathematically preserving all hues (green parks, blue water, road colors).
    Applied only to the tile layer — route line and markers are unaffected. */
 #map .leaflet-tile-pane,
 #detail-map .leaflet-tile-pane {
-  filter: brightness(1.8) contrast(1.15) saturate(2.2);
+  filter: invert(1) hue-rotate(180deg) brightness(1.15) saturate(1.6) contrast(1.05);
 }
 
-/* ── Recenter button — floats over map ──────────────────────── */
-.recenter-btn {
-  position: absolute;
-  bottom: 16px;
-  right: 12px;
-  z-index: 1000;
-  background: #1c1c1e;
-  border: 1px solid #3a3a3c;
-  border-radius: 20px;
-  padding: 8px 14px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #f36f21;
-  cursor: pointer;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
-  -webkit-tap-highlight-color: transparent;
+/* ── Leaflet controls — locate button + zoom buttons ────────── */
+/* All leaflet-bar controls (locate + zoom) share the same dark style */
+.leaflet-bar {
+  border: none !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6) !important;
 }
 
-/* ── Leaflet controls — styled for dark theme ───────────────── */
-.leaflet-control-zoom a {
+.leaflet-bar a {
   background-color: #1c1c1e !important;
   color: #ffffff !important;
-  border-color: #3a3a3c !important;
+  border-bottom-color: #2c2c2e !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 30px !important;
 }
 
-.leaflet-control-zoom a:hover {
+.leaflet-bar a:hover {
   background-color: #2c2c2e !important;
+  color: #f36f21 !important;
+}
+
+.leaflet-bar a:last-child {
+  border-bottom: none !important;
 }
 
 .leaflet-control-attribution {

@@ -545,3 +545,9 @@ function setStatus(msg, state) {
   el.textContent = msg;
   el.className   = 'gps-status ' + (state || '');
 }
+
+
+// ── Register service worker (enables PWA install + fast loading) ──
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+}

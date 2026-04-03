@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+
+  <!-- Dark background -->
+  <rect width="512" height="512" rx="110" fill="#111111"/>
+
+  <!-- Rear wheel -->
+  <circle cx="148" cy="348" r="92" fill="none" stroke="#f36f21" stroke-width="20"/>
+  <circle cx="148" cy="348" r="11" fill="#f36f21"/>
+
+  <!-- Front wheel -->
+  <circle cx="364" cy="348" r="92" fill="none" stroke="#f36f21" stroke-width="20"/>
+  <circle cx="364" cy="348" r="11" fill="#f36f21"/>
+
+  <!-- Chain stay: rear axle → bottom bracket -->
+  <line x1="148" y1="348" x2="258" y2="348" stroke="#f36f21" stroke-width="15" stroke-linecap="round"/>
+
+  <!-- Seat stay: rear axle → seat tube top -->
+  <line x1="148" y1="348" x2="216" y2="200" stroke="#f36f21" stroke-width="15" stroke-linecap="round"/>
+
+  <!-- Seat tube: bottom bracket → seat tube top -->
+  <line x1="258" y1="348" x2="216" y2="200" stroke="#f36f21" stroke-width="15" stroke-linecap="round"/>
+
+  <!-- Top tube: seat tube top → head tube top -->
+  <line x1="216" y1="200" x2="334" y2="212" stroke="#f36f21" stroke-width="15" stroke-linecap="round"/>
+
+  <!-- Down tube: bottom bracket → head tube bottom -->
+  <line x1="258" y1="348" x2="352" y2="278" stroke="#f36f21" stroke-width="15" stroke-linecap="round"/>
+
+  <!-- Head tube -->
+  <line x1="334" y1="212" x2="352" y2="278" stroke="#f36f21" stroke-width="18" stroke-linecap="round"/>
+
+  <!-- Fork: head tube bottom → front axle -->
+  <line x1="352" y1="278" x2="364" y2="348" stroke="#f36f21" stroke-width="15" stroke-linecap="round"/>
+
+  <!-- Seat post -->
+  <line x1="216" y1="200" x2="216" y2="168" stroke="#f36f21" stroke-width="13" stroke-linecap="round"/>
+
+  <!-- Saddle -->
+  <line x1="190" y1="168" x2="248" y2="168" stroke="#f36f21" stroke-width="16" stroke-linecap="round"/>
+
+  <!-- Stem -->
+  <line x1="334" y1="212" x2="344" y2="182" stroke="#f36f21" stroke-width="13" stroke-linecap="round"/>
+
+  <!-- Handlebars -->
+  <line x1="324" y1="182" x2="368" y2="182" stroke="#f36f21" stroke-width="16" stroke-linecap="round"/>
+
+  <!-- Bottom bracket hub -->
+  <circle cx="258" cy="348" r="12" fill="#f36f21"/>
+
+</svg>
